@@ -19,10 +19,11 @@ module.exports = (app, passport) => {
  app.get('/',authenticated, (req, res) => res.redirect('/restaurants'))
  app.get('/restaurants',authenticated, restController.getRestaurants)
 
- // 連到 /admin 頁面就轉到 /admin/restaurants
+ //連到 /admin 頁面就轉到 /admin/restaurants
  app.get('/admin',authenticatedAdmin, (req, res) => res.redirect('/admin/restaurants'))
- // 在 /admin/restaurants 底下則交給 adminController.getRestaurants 處理
  app.get('/admin/restaurants',authenticatedAdmin, adminController.getRestaurants)
+ app.get('/admin/restaurants/create', authenticatedAdmin, adminController.createRestaurant)
+ app.post('/admin/restaurants',authenticatedAdmin,adminController.postRestaurant)
 
  app.get('/signup', userController.signUpPage)
  app.post('/signup', userController.signUp)
