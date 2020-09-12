@@ -2,6 +2,7 @@ const db = require('../models')
 const Restaurant = db.Restaurant
 
 const adminController = {
+    //瀏覽所有餐廳
     getRestaurants: (req, res) => {
       return Restaurant.findAll({raw: true}).then(restaurants => {
         return res.render('admin/restaurants',{restaurants: restaurants})
@@ -28,6 +29,12 @@ const adminController = {
           res.redirect('/admin/restaurants')
         })
     },
+    //瀏覽單一餐廳
+    getRestaurant: (req, res) => {
+      return Restaurant.findByPk(req.params.id,{raw: true}).then(restaurant => {
+        return res.render('admin/restaurant',{restaurant: restaurant})
+      })
+    }
   }
   
   module.exports = adminController

@@ -16,18 +16,21 @@ module.exports = (app, passport) => {
     }
     res.redirect('/signin')
   }
+//index
  app.get('/',authenticated, (req, res) => res.redirect('/restaurants'))
  app.get('/restaurants',authenticated, restController.getRestaurants)
-
- //連到 /admin 頁面就轉到 /admin/restaurants
+//==============admin====================================
+ //連到admin 頁面就轉到/admin/restaurants
  app.get('/admin',authenticatedAdmin, (req, res) => res.redirect('/admin/restaurants'))
  app.get('/admin/restaurants',authenticatedAdmin, adminController.getRestaurants)
+ //admin create
  app.get('/admin/restaurants/create', authenticatedAdmin, adminController.createRestaurant)
  app.post('/admin/restaurants',authenticatedAdmin,adminController.postRestaurant)
-
+ //admin show
+ app.get('/admin/restaurants/:id', authenticatedAdmin, adminController.getRestaurant)
+//==============signup/signin====================================
  app.get('/signup', userController.signUpPage)
  app.post('/signup', userController.signUp)
-
  app.get('/signin', userController.signInPage)
  app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
  app.get('/logout', userController.logout)
