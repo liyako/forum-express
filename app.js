@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const flash = require('connect-flash')
 const session = require('express-session')
 const passport = require('./config/passport')
+const methodOverride = require('method-override')
 const app = express()
 const port = 3000
 
@@ -28,6 +29,8 @@ app.use((req, res, next) => {
     res.locals.user = req.user
     next()
 })
+//method
+app.use(methodOverride('_method'))
 // 跟資料庫同步
 app.listen(port, () => {
   db.sequelize.sync() 
