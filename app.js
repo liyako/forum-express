@@ -31,6 +31,8 @@ app.use((req, res, next) => {
 })
 //method
 app.use(methodOverride('_method'))
+//image
+app.use('/upload', express.static(__dirname + '/upload'))
 // 跟資料庫同步
 app.listen(port, () => {
   db.sequelize.sync() 
