@@ -1,5 +1,6 @@
 const db = require('../models') 
 const Restaurant = db.Restaurant
+const User = db.User
 const fs = require('fs')
 const restaurant = require('../models/restaurant')
 const imgur = require('imgur-node-api')
@@ -119,6 +120,32 @@ const adminController = {
           res.redirect('/admin/restaurants')
         })
       })
+    },
+    //瀏覽所有使用者
+    getUsers: (req, res) => {
+      return User.findAll({raw: true})
+        .then(users => {
+        return res.render('admin/users',{users: users})
+        })
+    },
+    //編輯使用者權限
+    putUsers: (req, res) => {
+      return User.findByPk(req.params.id)
+        .then(user => {
+          if(req.user.id  == user.id){
+            req.flash('error_messages', "You can't change permissions by youshelf")
+            return res.redirect('back')
+          }
+          if (!user.isAdmin) {
+            user.update({isAdmin: true})
+          } else {
+            user.update({isAdmin: false})
+          }
+        })
+        .then((user) => {
+          req.flash('success_messages', "user was successfully to update")
+          res.redirect('/admin/users')
+        })
     },
   }
   
