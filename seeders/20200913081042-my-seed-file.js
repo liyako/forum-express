@@ -38,7 +38,7 @@ module.exports = {
         })
       ), {})
     //餐廳
-    return queryInterface.bulkInsert('Restaurants', 
+/*     return queryInterface.bulkInsert('Restaurants', 
       Array.from({length: 50}).map(d =>
       ({
         name: faker.name.findName(),
@@ -51,7 +51,7 @@ module.exports = {
         updatedAt: new Date(),
         CategoryId: Math.floor(Math.random() * 5) + 1
       })
-    ), {});
+    ), {}); */
   },
   down: (queryInterface, Sequelize) => {
     queryInterface.bulkDelete('Categories',null,{});
