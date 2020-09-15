@@ -133,13 +133,15 @@ const adminController = {
       return User.findByPk(req.params.id)
         .then(user => {
           if(req.user.id  == user.id){
-            req.flash('error_messages', "You can't change permissions by youshelf")
+            req.flash('error_messages', "permission denied")
             return res.redirect('back')
           }
           if (!user.isAdmin) {
             user.update({isAdmin: true})
+            req.flash('success_messages', user.name+" set as admin")
           } else {
             user.update({isAdmin: false})
+            req.flash('success_messages', user.name+" set as user")
           }
         })
         .then((user) => {
