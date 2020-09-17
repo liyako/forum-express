@@ -42,8 +42,11 @@ module.exports = (app, passport) => {
  //=============category======================================================
  //連到admin 頁面就轉到/admin/categories
  app.get('/admin/categories',authenticatedAdmin, categoryController.getCategories)
- //admin create
+ //categories create
  app.post('/admin/categories',authenticatedAdmin, categoryController.postCategory)
+  //categories edit
+  app.get('/admin/categories/:id/edit', authenticatedAdmin, categoryController.getCategories)
+  app.put('/admin/categories/:id', authenticatedAdmin, categoryController.putCategory)
 //==============signup/signin====================================
  app.get('/signup', userController.signUpPage)
  app.post('/signup', userController.signUp)
