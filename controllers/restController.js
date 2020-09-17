@@ -2,10 +2,17 @@ const db = require('../models')
 const Restaurant = db.Restaurant
 const Category = db.Category
 
-//index
+
 let restController = {
+  //index
   getRestaurants: (req, res) => {
-    return Restaurant.findAll({include:Category})
+    let whereQuery ={}
+    let categoryId =''
+    if(req.query.categoryId){
+      categoryId = Number(req.query.categoryId)
+      whereQuery['CategoryId'] = categoryId
+    }
+    return Restaurant.findAll({include:Category,where: whereQuery})
     .then(restaurants => {
       const data = restaurants.map(r => ({
         ...r.dataValues,
@@ -13,8 +20,12 @@ let restController = {
         categoryName: r.Category.name
       }))
       //console.log(restaurants) 
-      return res.render('restaurants',{
-        restaurants: data
+      Category.findAll({ raw: true,nest: true}).then(categories => {
+        return res.render('restaurants', {
+          restaurants: data,
+          categories: categories,
+          categoryId: categoryId
+        })
       })
     })
   },
@@ -29,4 +40,4 @@ let restController = {
     })
   },
 }
-  module.exports = restController
+module.exports = restController
