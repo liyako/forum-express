@@ -49,6 +49,9 @@ module.exports = (app, passport) => {
   app.put('/admin/categories/:id', authenticatedAdmin, categoryController.putCategory)
   //categories delete
  app.delete('/admin/categories/:id', authenticatedAdmin, categoryController.deleteCategory)
+//=============index===========================================================
+//show
+app.get('/restaurants/:id', authenticated, restController.getRestaurant)
 //==============signup/signin====================================
  app.get('/signup', userController.signUpPage)
  app.post('/signup', userController.signUp)

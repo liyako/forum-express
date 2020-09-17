@@ -2,7 +2,7 @@ const db = require('../models')
 const Restaurant = db.Restaurant
 const Category = db.Category
 
-
+//index
 let restController = {
   getRestaurants: (req, res) => {
     return Restaurant.findAll({include:Category})
@@ -18,5 +18,15 @@ let restController = {
       })
     })
   },
-  }
+  //顯示單一資料
+  getRestaurant: (req, res) => {
+    return Restaurant.findByPk(req.params.id,{
+      include:Category
+    }).then(restaurant => {
+      return res.render('restaurant',{
+        restaurant: restaurant.toJSON()
+      })
+    })
+  },
+}
   module.exports = restController
