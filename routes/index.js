@@ -1,6 +1,7 @@
 const restController = require('../controllers/restController.js')
 const adminController = require('../controllers/adminController.js') 
 const userController = require('../controllers/userController.js')
+const categoryController = require('../controllers/categoryController.js')
 const multer = require('multer')
 const upload = multer({dest: 'temp/'})
 
@@ -38,6 +39,11 @@ module.exports = (app, passport) => {
  //admin delete
  app.delete('/admin/restaurants/:id', authenticatedAdmin, adminController.deleteRestaurant)
 
+ //=============category======================================================
+ //連到admin 頁面就轉到/admin/categories
+ app.get('/admin/categories',authenticatedAdmin, categoryController.getCategories)
+ //admin create
+ app.post('/admin/categories',authenticatedAdmin, categoryController.postCategory)
 //==============signup/signin====================================
  app.get('/signup', userController.signUpPage)
  app.post('/signup', userController.signUp)
