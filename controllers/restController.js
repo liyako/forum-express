@@ -12,7 +12,7 @@ let restController = {
         description: r.dataValues.description.substring(0,50),
         categoryName: r.Category.name
       }))
-      console.log(restaurants) 
+      //console.log(restaurants) 
       return res.render('restaurants',{
         restaurants: data
       })
