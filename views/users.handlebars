@@ -1,8 +1,8 @@
 <div class="card mb-3" style="max-width: 700px;">
   <div class="row no-gutters">
     <div class="col-md-4">
-      {{#if users.image}}
-      <img class="card-img-top" src="{{users.image}}"  width="286px" height="180px">
+      {{#if user.image}}
+      <img class="card-img-top" src="{{user.image}}"  width="286px" height="180px">
       {{else}}
       <img class="card-img-top" src="https://imgs.gotrip.hk/wp-content/uploads/2017/11/blank-profile-picture-973460_960_720_2583405935a02dfab699c6.png"  
       width="286px" height="180px">
@@ -10,10 +10,11 @@
     </div>
     <div class="col-md-8">
       <div class="card-body">
-        <h5 class="card-title">{{users.name}}</h5>
-        <p class="card-text">{{users.email}}</p>
+        <h5 class="card-title">{{user.name}}</h5>
+        <p class="card-text">{{user.email}}</p>
+        <p class="card-text">{{user.Comments.length}}已評論餐廳</p>
         <button type="button" class="btn btn-dark">
-          {{#ifCond user.id users.id}}
+          {{#ifCond user.id user.id}}
           <a href="/users/{{user.id}}/edit">
             Edit
           </a>
@@ -22,4 +23,21 @@
       </div>
     </div>
   </div>
+</div>
+<br/>
+<br/>
+<h3>所有評論</h3>
+<div class="card">
+  <div class="card-header">
+    {{user.Comments.length}}已評論餐廳
+  </div>
+  <div class="card-body row">
+  {{#each user.Comments}}
+  <div class="col-2">
+    <a href="/restaurants/{{RestaurantId}}">
+    <img class="card-img-top" src="{{this.Restaurant.image}}" style="width: 6rem">
+    </a>
+  </div>
+
+  {{/each}}
 </div>
