@@ -65,4 +65,9 @@ app.delete('/comments/:id', authenticatedAdmin, commentController.deleteComment)
  app.get('/signin', userController.signInPage)
  app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
  app.get('/logout', userController.logout)
+ //Profile
+ app.get('/users/:id',authenticated, userController.getUser)
+ //editProfile
+ app.get('/users/:id/edit',authenticated, userController.editUser)
+ app.put('/users/:id', authenticated,upload.single('image'),userController.putUser)
 }
