@@ -27,6 +27,8 @@ module.exports = (app, passport) => {
 //show
 app.get('/restaurants/feeds', authenticated, restController.getFeeds)//注意順序
 app.get('/restaurants/:id', authenticated, restController.getRestaurant)
+//dashboard
+app.get('/restaurants/:id/dashboard', authenticated, restController.getDashboard)
 //comment
 app.post('/comments',authenticated, commentController.postComment)
 //delete
