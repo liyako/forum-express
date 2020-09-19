@@ -36,6 +36,9 @@ app.delete('/comments/:id', authenticatedAdmin, commentController.deleteComment)
 //Favorite
 app.post('/favorite/:restaurantId', authenticated, userController.addFavorite)
 app.delete('/favorite/:restaurantId', authenticated, userController.removeFavorite)
+//Like
+app.post('/like/:restaurantId', authenticated, userController.addLike)
+app.delete('/like/:restaurantId', authenticated, userController.removeLike)
 //==============admin====================================
  //連到admin 頁面就轉到/admin/restaurants
  app.get('/admin',authenticatedAdmin, (req, res) => res.redirect('/admin/restaurants'))
