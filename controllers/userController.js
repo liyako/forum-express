@@ -64,16 +64,12 @@ const userController = {
       })
     })
   },
-  //編輯Profile資訊
+  //編輯單一Profile資訊
   editUser: (req, res) => {
-    User.findAll({
-      raw: true,
-      nest: true
-    }).then(user => {
-      return User.findByPk(req.params.id,{ raw: true })
+    return User.findByPk(req.params.id,{ raw: true})
       .then(user => {
+      //console.log(req.params.id)
       return res.render('edituser',{user: user})
-      })
     })
   },
   putUser: (req, res) => {
