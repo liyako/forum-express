@@ -24,6 +24,13 @@ module.exports = (app, passport) => {
 //index
  app.get('/',authenticated, (req, res) => res.redirect('/restaurants'))
  app.get('/restaurants',authenticated, restController.getRestaurants)
+//show
+app.get('/restaurants/feeds', authenticated, restController.getFeeds)//注意順序
+app.get('/restaurants/:id', authenticated, restController.getRestaurant)
+//comment
+app.post('/comments',authenticated, commentController.postComment)
+//delete
+app.delete('/comments/:id', authenticatedAdmin, commentController.deleteComment)
 //==============admin====================================
  //連到admin 頁面就轉到/admin/restaurants
  app.get('/admin',authenticatedAdmin, (req, res) => res.redirect('/admin/restaurants'))
@@ -51,14 +58,6 @@ module.exports = (app, passport) => {
   app.put('/admin/categories/:id', authenticatedAdmin, categoryController.putCategory)
   //categories delete
  app.delete('/admin/categories/:id', authenticatedAdmin, categoryController.deleteCategory)
-//=============index===========================================================
-//show
-app.get('/restaurants/:id', authenticated, restController.getRestaurant)
-//comment
-app.post('/comments',authenticated, commentController.postComment)
-//delete
-app.delete('/comments/:id', authenticatedAdmin, commentController.deleteComment)
-
 //==============signup/signin====================================
  app.get('/signup', userController.signUpPage)
  app.post('/signup', userController.signUp)
