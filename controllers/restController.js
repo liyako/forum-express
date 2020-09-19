@@ -2,6 +2,7 @@ const db = require('../models')
 const Restaurant = db.Restaurant
 const Category = db.Category
 const Comment = db.Comment
+const Favorite  = db.Favorite
 const User = db.User
 
 //分頁
@@ -103,6 +104,24 @@ let restController = {
       return res.render('dashboard',{
         restaurant: restaurant.toJSON()
       })
+    })
+  },
+  //getToprestaurant
+  getToprestaurant: (req, res) => {
+    return Restaurant.findAll({
+      limit: 10,
+      include: [
+        { model: User, as: 'FavoritedUsers' }
+      ]
+    }).then(restaurants => {
+      restaurants = restaurants.map(restaurant => ({
+        ...restaurant.dataValues,
+        description: restaurant.dataValues.description.substring(0,50),
+        FavoriterCount: restaurant.FavoritedUsers.length,
+        isFavorited: req.user.FavoritedRestaurants.map(d => d.id).includes(restaurant.id)
+      }))
+      restaurants = restaurants.sort((a, b) => b.FavoriterCount - a.FavoriterCount)
+      return res.render('topRestaurant', { restaurants: restaurants })
     })
   },
 }
