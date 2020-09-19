@@ -72,6 +72,8 @@ app.delete('/like/:restaurantId', authenticated, userController.removeLike)
  app.get('/signin', userController.signInPage)
  app.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
  app.get('/logout', userController.logout)
+ //TopUser注意順序
+ app.get('/users/top', authenticated, userController.getTopUser)
  //Profile
  app.get('/users/:id',authenticated, userController.getUser)
  //editProfile
