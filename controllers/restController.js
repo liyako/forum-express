@@ -98,9 +98,11 @@ let restController = {
     return Restaurant.findByPk(req.params.id,{
       include:[
         Category,
-        {model:Comment, include:[User]}
+        {model:Comment, include:[User]},
+        {model: User, as: 'FavoritedUsers'}
       ]
     }).then(restaurant => {
+      //console.log(restaurant.dataValues)
       return res.render('dashboard',{
         restaurant: restaurant.toJSON()
       })
