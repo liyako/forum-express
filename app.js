@@ -41,7 +41,6 @@ app.use(methodOverride('_method'))
 app.use('/upload', express.static(__dirname + '/upload'))
 // 跟資料庫同步
 app.listen(port, () => {
-  //db.sequelize.sync() 
   console.log(`Example app listening on port ${port}`)
 })
 
