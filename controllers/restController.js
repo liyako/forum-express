@@ -53,6 +53,10 @@ let restController = {
       ]
     }).then(restaurant => {
       //console.log(restaurant.Comments[0].dataValues)
+      restaurant.viewCounts++
+      //console.log(restaurant.viewCounts)
+      restaurant.save()
+      //console.log(restaurant.dataValues)
       return res.render('restaurant',{
         restaurant: restaurant.toJSON()
       })
