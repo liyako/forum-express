@@ -33,6 +33,9 @@ app.get('/restaurants/:id/dashboard', authenticated, restController.getDashboard
 app.post('/comments',authenticated, commentController.postComment)
 //delete
 app.delete('/comments/:id', authenticatedAdmin, commentController.deleteComment)
+//Favorite
+app.post('/favorite/:restaurantId', authenticated, userController.addFavorite)
+app.delete('/favorite/:restaurantId', authenticated, userController.removeFavorite)
 //==============admin====================================
  //連到admin 頁面就轉到/admin/restaurants
  app.get('/admin',authenticatedAdmin, (req, res) => res.redirect('/admin/restaurants'))

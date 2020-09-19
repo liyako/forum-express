@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     UserId: DataTypes.INTEGER,
     RestaurantId: DataTypes.INTEGER
   }, {});
-  User.associate = function(models) {
+  Favorite.associate = function(models) {
     
   };
   return Favorite;
