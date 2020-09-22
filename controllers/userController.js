@@ -64,7 +64,6 @@ const userController = {
       ]
     })
     .then(user => {
-      //console.log(user.Comments[0].dataValues)
       const isFollowings = req.user.Followings.map(d => d.id).includes(user.id)
       const isFollowers = req.user.Followers.map(d => d.id).includes(user.id)
       const isFavoritedRestaurants = req.user.FavoritedRestaurants.map(d => d.id).includes(user.id)
@@ -91,7 +90,6 @@ const userController = {
   editUser: (req, res) => {
     return User.findByPk(req.params.id,{ raw: true})
       .then(user => {
-      //console.log(req.params.id)
       return res.render('edituser',{user: user})
     })
   },

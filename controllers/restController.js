@@ -58,11 +58,8 @@ let restController = {
     }).then(restaurant => {
       const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(req.user.id)
       const isLiked = restaurant.LikedUsers.map(d => d.id).includes(req.user.id)
-      //console.log(restaurant.Comments[0].dataValues)
       restaurant.viewCounts++
-      //console.log(restaurant.viewCounts)
       restaurant.save()
-      //console.log(restaurant.dataValues)
       return res.render('restaurant',{
         restaurant: restaurant.toJSON(),
         isFavorited: isFavorited,
@@ -102,7 +99,6 @@ let restController = {
         {model: User, as: 'FavoritedUsers'}
       ]
     }).then(restaurant => {
-      //console.log(restaurant.dataValues)
       return res.render('dashboard',{
         restaurant: restaurant.toJSON()
       })
@@ -111,7 +107,6 @@ let restController = {
   //getToprestaurant
   getToprestaurant: (req, res) => {
     return Restaurant.findAll({
-      limit: 10,
       include: [
         { model: User, as: 'FavoritedUsers' }
       ]
@@ -122,7 +117,7 @@ let restController = {
         FavoriterCount: restaurant.FavoritedUsers.length,
         isFavorited: req.user.FavoritedRestaurants.map(d => d.id).includes(restaurant.id)
       }))
-      restaurants = restaurants.sort((a, b) => b.FavoriterCount - a.FavoriterCount)
+      restaurants = restaurants.sort((a, b) => b.FavoriterCount - a.FavoriterCount).slice(0, 10)
       return res.render('topRestaurant', { restaurants: restaurants })
     })
   },
