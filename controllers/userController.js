@@ -52,18 +52,38 @@ const userController = {
     req.logout()
     res.redirect('/signin')
   },
-  //瀏覽 Profile
+  //瀏覽 Profile 
   getUser: (req, res) => {
-    return User.findByPk(req.user.id,{ 
+    return User.findByPk(req.params.id,{ 
       include:[
         Comment,
-        {model:Comment, include:[Restaurant]}
+        {model:Comment, include:[Restaurant]},
+        {model: User, as: 'Followings'},
+        {model: User, as: 'Followers'},
+        {model: Restaurant, as: 'FavoritedRestaurants'}
       ]
     })
     .then(user => {
       //console.log(user.Comments[0].dataValues)
+      const isFollowings = req.user.Followings.map(d => d.id).includes(user.id)
+      const isFollowers = req.user.Followers.map(d => d.id).includes(user.id)
+      const isFavoritedRestaurants = req.user.FavoritedRestaurants.map(d => d.id).includes(user.id)
+      const isFollowed = req.user.Followings.map(d => d.id).includes(user.id)
+      
+      const set = new Set()
+      const checkid = []
+      const leagth = user.Comments.length
+      for (i=0;i<leagth;i++){
+        checkid.push( user.Comments[i].dataValues )
+      }
+      const result = checkid.filter(item=>!set.has(item.RestaurantId)?set.add(item.RestaurantId):false) 
       return res.render('users',{
-        user: user.toJSON()
+        user: user.toJSON(),
+        isFollowings: isFollowings,
+        isFollowers: isFollowers,
+        isFavoritedRestaurants:isFavoritedRestaurants,
+        isFollowed:isFollowed,
+        result:result
       })
     })
   },
