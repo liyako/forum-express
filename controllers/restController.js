@@ -58,7 +58,7 @@ let restController = {
     }).then(restaurant => {
       const isFavorited = restaurant.FavoritedUsers.map(d => d.id).includes(req.user.id)
       const isLiked = restaurant.LikedUsers.map(d => d.id).includes(req.user.id)
-      restaurant.viewCounts++
+      restaurant.viewCounts+1
       restaurant.save()
       return res.render('restaurant',{
         restaurant: restaurant.toJSON(),
