@@ -15,10 +15,10 @@
 - 使用者可以點選Top10人氣餐廳查看收藏數高的餐廳
 - 使用者可以點選美食達人查看追蹤人數高的使用者
 # 專案畫面
-![image]()
+![image](https://github.com/liyako/forum-express/blob/master/pic1.JPG)
 # 執行步驟
 - 下載專案
-> git clone https://github.com/liyako/expense_tracker
+> git clone https://github.com/liyako/forum-express
 - 進入資料夾
 > cd restaurant_forum
 - 下載套件
