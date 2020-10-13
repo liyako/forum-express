@@ -5,14 +5,15 @@ const Category = db.Category
 const fs = require('fs')
 const restaurant = require('../models/restaurant')
 const imgur = require('imgur-node-api')
+const adminService = require('../services/adminService')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const adminController = {
     //瀏覽所有餐廳
     getRestaurants: (req, res) => {
-      return Restaurant.findAll({raw: true,nest: true,include:[Category]}).then(restaurants => {
-        return res.render('admin/restaurants',{restaurants: restaurants})
-      })
+      adminService.getRestaurants(req, res,(data => {
+        return res.render('admin/restaurants',data)
+      }))
     },
     //新增餐廳
     createRestaurant: (req,res) => {
@@ -66,8 +67,8 @@ const adminController = {
     },
     //瀏覽單一餐廳
     getRestaurant: (req, res) => {
-      return Restaurant.findByPk(req.params.id,{raw: true,nest: true,include:[Category]}).then(restaurant => {
-        return res.render('admin/restaurant',{restaurant: restaurant})
+      adminService.getRestaurant(req,res,(data) => {
+        return res.render('admin/restaurant', data)
       })
     },
     //編輯餐廳資訊
@@ -133,12 +134,10 @@ const adminController = {
     },
     //刪除
     deleteRestaurant: (req, res) => {
-      return Restaurant.findByPk(req.params.id)
-      .then(restaurant => {
-        restaurant.destroy()
-        .then((restaurant) => {
+      adminService.deleteRestaurant(req,res,(data) => {
+        if (data['status'] === 'success'){
           res.redirect('/admin/restaurants')
-        })
+        }
       })
     },
     //瀏覽所有使用者
